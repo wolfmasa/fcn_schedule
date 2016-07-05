@@ -215,3 +215,42 @@ function diff_events(sheetName){
   return true;
 }
 
+function delete_event(calendar, startTime){
+  // 同じ日にイベントが２つある場合には？
+  
+  // startTime から同じ日のイベントを削除する
+  var month = startTime.getMonth()+1;
+  var day = startTime.getDate();
+  var start_of_day = new Date(month, day);
+  var twoHoursFromNow = new Date(start_of_day + (24 * 60 * 60 * 1000));
+ var events = cal.getEvents(start_of_Day, twoHoursFromNow);
+ Logger.log('Number of events: ' + events.length);
+  
+  // なかったらそのまま（エラーではない）
+  if( events.length == 0){
+    return ;
+  }else if (events.length > 1){
+    // 2つあるのでどうしよう。
+  }else{
+    //delete
+  }
+}
+
+function create_event(calendar, title, startTime, endTime){
+  var event = calendar.createEvent(title, startTime, endTime);
+ Logger.log('Event ID: ' + event.getId());
+  return event;
+}
+
+
+// 差分のイベントを更新する。
+function update_GCalender(title, startTime, endTime){
+  
+  var cal = CalendarApp.getDefaultCalendar();
+  
+  // 更新元のイベントを抽出し、削除する。
+  delete_event(cal, startTime);
+  
+  // 更新するイベントを作成し、登録する
+  create_event(cal, title, startTime, endTime);
+　}
